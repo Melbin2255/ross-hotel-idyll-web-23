@@ -22,8 +22,8 @@ export const useScrollTransition = (heroHeight: number, targetPosition: number) 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [targetPosition]);
 
-  const startAnimation = heroHeight * 0.3; // Start animation at 30% scroll through hero
-  const endAnimation = targetPosition - 100; // End 100px before target
+  const startAnimation = heroHeight * 0.4; // Start animation at 40% scroll through hero
+  const endAnimation = targetPosition - 50; // End 50px before target for smoother transition
 
   return {
     scrollY,
@@ -31,5 +31,6 @@ export const useScrollTransition = (heroHeight: number, targetPosition: number) 
     startY: startAnimation,
     endY: endAnimation,
     shouldShow: scrollY >= startAnimation && scrollY < targetPosition,
+    progress: Math.min(Math.max((scrollY - startAnimation) / (endAnimation - startAnimation), 0), 1),
   };
 };

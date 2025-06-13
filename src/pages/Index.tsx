@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
@@ -28,9 +27,9 @@ const Index = () => {
     return () => window.removeEventListener('resize', updatePositions);
   }, []);
 
-  const { scrollY, isSettled, startY, endY, shouldShow } = useScrollTransition(
+  const { scrollY, isSettled, startY, endY, shouldShow, progress } = useScrollTransition(
     heroHeight,
-    roomsPosition + 200 // Target position within rooms section
+    roomsPosition + 150 // Target position within rooms section
   );
 
   return (
@@ -40,13 +39,15 @@ const Index = () => {
         <HeroSection />
       </div>
       
-      {/* Floating transition text */}
+      {/* Enhanced floating transition text */}
       {shouldShow && (
         <ScrollTransitionText
           text="Experience Tranquility"
           startY={startY}
           endY={endY}
           settled={isSettled}
+          progress={progress}
+          scrollY={scrollY}
         />
       )}
       
