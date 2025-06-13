@@ -1,6 +1,6 @@
+
 import React from 'react';
 import { Wifi, Users, Camera, Phone, Star, MapPin, Sparkles } from 'lucide-react';
-import TextSettlingTarget from './TextSettlingTarget';
 
 const RoomsSection = () => {
   const rooms = [
@@ -40,11 +40,8 @@ const RoomsSection = () => {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-100/20 rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Text Settling Target */}
-        <TextSettlingTarget />
-
-        {/* Original Section Header - Hidden when text is settled */}
-        <div className="text-center mb-20 opacity-0 pointer-events-none">
+        {/* Premium Section Header */}
+        <div className="text-center mb-20">
           <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-amber-50 to-emerald-50 rounded-full border border-amber-200/50">
             <Sparkles className="text-amber-600" size={20} />
             <span className="text-amber-800 font-medium tracking-wide text-sm">LUXURY ACCOMMODATIONS</span>
@@ -169,7 +166,6 @@ const RoomsSection = () => {
 
         {/* Premium Bottom CTA */}
         <div className="text-center mt-20">
-          {/* ... keep existing code (bottom CTA section) */}
           <div className="bg-gradient-to-r from-slate-800 via-emerald-900 to-slate-800 rounded-3xl p-12 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 via-transparent to-emerald-600/10"></div>
             <div className="relative z-10">
