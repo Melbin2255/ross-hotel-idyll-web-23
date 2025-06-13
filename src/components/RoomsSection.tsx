@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Wifi, Users, Camera } from 'lucide-react';
+import { Wifi, Users, Camera, Phone } from 'lucide-react';
 
 const RoomsSection = () => {
   const rooms = [
