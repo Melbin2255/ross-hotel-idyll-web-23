@@ -1,13 +1,22 @@
 
-import React, { useState } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Phone, Crown } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const menuItems = [
     { name: 'Home', href: '#home' },
-    { name: 'Rooms & Suites', href: '#rooms' },
+    { name: 'Luxury Suites', href: '#rooms' },
     { name: 'Facilities', href: '#facilities' },
     { name: 'Attractions', href: '#attractions' },
     { name: 'Gallery', href: '#gallery' },
@@ -15,17 +24,39 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-lg shadow-slate-900/5' 
+        : 'bg-white/10 backdrop-blur-sm border-b border-white/20'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <h1 className="text-2xl font-serif font-bold text-emerald-800">
-              RJ Ross Hotel
-            </h1>
-            <p className="text-xs text-amber-600 font-medium tracking-wide">
-              PREMIUM HOSPITALITY
-            </p>
+        <div className="flex justify-between items-center h-24">
+          {/* Premium Logo */}
+          <div className="flex-shrink-0 group">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <Crown className={`w-8 h-8 transition-colors duration-300 ${
+                  isScrolled ? 'text-amber-600' : 'text-amber-400'
+                }`} />
+                <div className="absolute inset-0 animate-pulse">
+                  <Crown className={`w-8 h-8 transition-colors duration-300 ${
+                    isScrolled ? 'text-amber-400' : 'text-amber-300'
+                  } opacity-50`} />
+                </div>
+              </div>
+              <div>
+                <h1 className={`text-2xl font-serif font-bold transition-colors duration-300 ${
+                  isScrolled ? 'text-slate-800' : 'text-white'
+                }`}>
+                  RJ Ross Hotel
+                </h1>
+                <p className={`text-xs font-medium tracking-wider transition-colors duration-300 ${
+                  isScrolled ? 'text-amber-600' : 'text-amber-400'
+                }`}>
+                  PREMIUM HOSPITALITY
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Desktop Menu */}
@@ -34,18 +65,24 @@ const Navigation = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-emerald-800 hover:text-amber-600 font-medium transition-colors duration-300 relative group"
+                className={`font-medium transition-all duration-300 relative group py-2 ${
+                  isScrolled 
+                    ? 'text-slate-700 hover:text-amber-600' 
+                    : 'text-white/90 hover:text-amber-400'
+                }`}
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-600 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 opacity-50 transition-all duration-500 group-hover:w-full delay-100"></span>
               </a>
             ))}
             <a
               href="tel:+919876543210"
-              className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+              className="relative bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-amber-500/25 transition-all duration-300 transform hover:scale-105 flex items-center gap-3 overflow-hidden group"
             >
-              <Phone size={16} />
-              Book Now
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Phone size={18} className="relative z-10" />
+              <span className="relative z-10">Reserve Now</span>
             </a>
           </div>
 
@@ -53,33 +90,40 @@ const Navigation = () => {
           <div className="lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-emerald-800 hover:text-amber-600 transition-colors"
+              className={`p-2 rounded-xl transition-all duration-300 ${
+                isScrolled 
+                  ? 'text-slate-700 hover:text-amber-600 hover:bg-amber-50' 
+                  : 'text-white hover:text-amber-400 hover:bg-white/10'
+              }`}
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Premium Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden absolute top-20 left-0 right-0 bg-white border-b border-amber-100 shadow-lg">
-            <div className="px-4 py-6 space-y-4">
-              {menuItems.map((item) => (
+          <div className="lg:hidden absolute top-24 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-xl">
+            <div className="px-6 py-8 space-y-6">
+              {menuItems.map((item, index) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block text-emerald-800 hover:text-amber-600 font-medium py-2 transition-colors"
+                  className="block text-slate-700 hover:text-amber-600 font-medium py-3 transition-all duration-300 border-b border-slate-100 last:border-b-0 relative group"
                   onClick={() => setIsOpen(false)}
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  {item.name}
+                  <span className="relative z-10">{item.name}</span>
+                  <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-amber-500 to-amber-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
                 </a>
               ))}
               <a
                 href="tel:+919876543210"
-                className="block bg-gradient-to-r from-amber-600 to-amber-700 text-white px-6 py-3 rounded-lg font-medium text-center mt-4"
+                className="block bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white px-8 py-4 rounded-xl font-semibold text-center transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                onClick={() => setIsOpen(false)}
               >
-                <Phone size={16} className="inline mr-2" />
-                Book Now
+                <Phone size={18} className="inline mr-3" />
+                Reserve Your Stay
               </a>
             </div>
           </div>
