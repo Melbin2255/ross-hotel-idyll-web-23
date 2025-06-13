@@ -1,8 +1,12 @@
-
 import React from 'react';
 import { Wifi, Users, Camera, Phone, Star, MapPin, Sparkles } from 'lucide-react';
+import SettledText from './SettledText';
 
-const RoomsSection = () => {
+interface RoomsSectionProps {
+  showSettledText?: boolean;
+}
+
+const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
   const rooms = [
     {
       id: 1,
@@ -40,31 +44,38 @@ const RoomsSection = () => {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-100/20 rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Premium Section Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-amber-50 to-emerald-50 rounded-full border border-amber-200/50">
-            <Sparkles className="text-amber-600" size={20} />
-            <span className="text-amber-800 font-medium tracking-wide text-sm">LUXURY ACCOMMODATIONS</span>
-            <Sparkles className="text-amber-600" size={20} />
+        {/* Settled Text - appears when animation completes */}
+        {showSettledText && (
+          <SettledText text="Experience Tranquility" isVisible={showSettledText} />
+        )}
+
+        {/* Premium Section Header - only show when no settled text */}
+        {!showSettledText && (
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-amber-50 to-emerald-50 rounded-full border border-amber-200/50">
+              <Sparkles className="text-amber-600" size={20} />
+              <span className="text-amber-800 font-medium tracking-wide text-sm">LUXURY ACCOMMODATIONS</span>
+              <Sparkles className="text-amber-600" size={20} />
+            </div>
+            
+            <h2 className="text-5xl md:text-7xl font-serif font-bold mb-8">
+              <span className="bg-gradient-to-r from-slate-800 via-emerald-800 to-slate-800 bg-clip-text text-transparent">
+                Rooms & Suites
+              </span>
+            </h2>
+            
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-600 to-amber-700"></div>
+              <Star className="text-amber-600" size={24} />
+              <div className="w-16 h-[2px] bg-gradient-to-l from-transparent via-amber-600 to-amber-700"></div>
+            </div>
+            
+            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+              Discover our <span className="text-emerald-700 font-medium">meticulously crafted accommodations</span>, each offering an exquisite blend 
+              of <span className="text-amber-700 font-medium">timeless luxury</span>, contemporary comfort, and breathtaking views of Kerala's pristine hill country.
+            </p>
           </div>
-          
-          <h2 className="text-5xl md:text-7xl font-serif font-bold mb-8">
-            <span className="bg-gradient-to-r from-slate-800 via-emerald-800 to-slate-800 bg-clip-text text-transparent">
-              Rooms & Suites
-            </span>
-          </h2>
-          
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-600 to-amber-700"></div>
-            <Star className="text-amber-600" size={24} />
-            <div className="w-16 h-[2px] bg-gradient-to-l from-transparent via-amber-600 to-amber-700"></div>
-          </div>
-          
-          <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
-            Discover our <span className="text-emerald-700 font-medium">meticulously crafted accommodations</span>, each offering an exquisite blend 
-            of <span className="text-amber-700 font-medium">timeless luxury</span>, contemporary comfort, and breathtaking views of Kerala's pristine hill country.
-          </p>
-        </div>
+        )}
 
         {/* Premium Rooms Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
