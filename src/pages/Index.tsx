@@ -1,7 +1,8 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
-import HeroSection from '../components/HeroSection';
+import CinematicIntro from '../components/CinematicIntro';
+import EnhancedHeroSection from '../components/EnhancedHeroSection';
 import QuickLinksSection from '../components/QuickLinksSection';
 import RoomsSection from '../components/RoomsSection';
 import AttractionsSection from '../components/AttractionsSection';
@@ -15,6 +16,10 @@ const Index = () => {
   const roomsRef = useRef<HTMLDivElement>(null);
   const [heroHeight, setHeroHeight] = useState(0);
   const [roomsPosition, setRoomsPosition] = useState(0);
+  
+  // Cinematic intro state
+  const [showIntro, setShowIntro] = useState(true);
+  const [showHeroContent, setShowHeroContent] = useState(false);
 
   useEffect(() => {
     const updatePositions = () => {
@@ -31,18 +36,34 @@ const Index = () => {
 
   const { scrollY, isSettled, startY, endY, shouldShow, progress } = useScrollTransition(
     heroHeight,
-    roomsPosition + 150 // Target position within rooms section
+    roomsPosition + 150
   );
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    // Small delay before showing hero content for smooth transition
+    setTimeout(() => {
+      setShowHeroContent(true);
+    }, 300);
+  };
 
   return (
     <div className="min-h-screen relative">
-      <Navigation />
+      {/* Cinematic Intro */}
+      <CinematicIntro 
+        isVisible={showIntro} 
+        onComplete={handleIntroComplete} 
+      />
+      
+      {/* Navigation - only show after intro */}
+      {!showIntro && <Navigation />}
+      
       <div ref={heroRef}>
-        <HeroSection />
+        <EnhancedHeroSection showContent={showHeroContent} />
       </div>
       
       {/* Enhanced floating transition text */}
-      {shouldShow && (
+      {shouldShow && !showIntro && (
         <ScrollTransitionText
           text="Experience Tranquility"
           startY={startY}
