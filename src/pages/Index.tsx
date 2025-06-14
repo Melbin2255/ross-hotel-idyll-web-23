@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
 import CinematicIntro from '../components/CinematicIntro';
@@ -8,7 +7,6 @@ import RoomsSection from '../components/RoomsSection';
 import AttractionsSection from '../components/AttractionsSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
-import ScrollTransitionText from '../components/ScrollTransitionText';
 import { useScrollTransition } from '../hooks/useScrollTransition';
 
 const Index = () => {
@@ -34,7 +32,7 @@ const Index = () => {
     return () => window.removeEventListener('resize', updatePositions);
   }, []);
 
-  const { scrollY, isSettled, startY, endY, shouldShow, progress } = useScrollTransition(
+  const { isSettled } = useScrollTransition(
     heroHeight,
     roomsPosition + 150
   );
@@ -61,18 +59,6 @@ const Index = () => {
       <div ref={heroRef}>
         <EnhancedHeroSection showContent={showHeroContent} />
       </div>
-      
-      {/* Enhanced floating transition text */}
-      {shouldShow && !showIntro && (
-        <ScrollTransitionText
-          text="Experience Tranquility"
-          startY={startY}
-          endY={endY}
-          settled={isSettled}
-          progress={progress}
-          scrollY={scrollY}
-        />
-      )}
       
       <QuickLinksSection />
       
