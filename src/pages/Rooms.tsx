@@ -4,7 +4,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import RoomCard from '../components/RoomCard';
 import { Button } from '../components/ui/button';
-import { Bed, Users, Wifi, Car, Coffee, Shield } from 'lucide-react';
+import { Bed, Users, Wifi, Car, Coffee, Shield, Star } from 'lucide-react';
 
 const Rooms = () => {
   const roomTypes = [
@@ -15,7 +15,14 @@ const Rooms = () => {
       price: '₹4,500',
       sleeps: 4,
       features: ['King Size Bed', 'Mountain View', 'Premium Amenities', 'Mini Bar'],
-      amenities: ['Air Conditioning', 'Free WiFi', 'Room Service', 'TV']
+      amenities: ['Air Conditioning', 'Free WiFi', 'Room Service', 'TV'],
+      rating: 4.9,
+      isPopular: true,
+      testimonial: {
+        text: "Absolutely stunning room with incredible mountain views. The luxury amenities made our anniversary perfect!",
+        guest: "Priya S.",
+        photo: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=150&q=80"
+      }
     },
     {
       id: 'deluxe-ac',
@@ -24,7 +31,14 @@ const Rooms = () => {
       price: '₹3,200',
       sleeps: 3,
       features: ['Queen Size Bed', 'Garden View', 'Modern Comfort', 'Work Desk'],
-      amenities: ['Air Conditioning', 'Free WiFi', 'Room Service', 'TV']
+      amenities: ['Air Conditioning', 'Free WiFi', 'Room Service', 'TV'],
+      rating: 4.8,
+      isPopular: false,
+      testimonial: {
+        text: "Perfect blend of comfort and elegance. The garden view was so peaceful and relaxing.",
+        guest: "Rajesh M.",
+        photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80"
+      }
     },
     {
       id: 'standard-ac',
@@ -33,7 +47,14 @@ const Rooms = () => {
       price: '₹2,800',
       sleeps: 2,
       features: ['Double Bed', 'City View', 'Essential Comfort', 'Reading Area'],
-      amenities: ['Air Conditioning', 'Free WiFi', 'Room Service', 'TV']
+      amenities: ['Air Conditioning', 'Free WiFi', 'Room Service', 'TV'],
+      rating: 4.7,
+      isPopular: false,
+      testimonial: {
+        text: "Great value for money with all essential amenities. Clean and comfortable stay.",
+        guest: "Amit R.",
+        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+      }
     },
     {
       id: 'premium-non-ac',
@@ -42,7 +63,14 @@ const Rooms = () => {
       price: '₹2,200',
       sleeps: 3,
       features: ['Traditional Style', 'Natural Ventilation', 'Eco-Friendly', 'Peaceful'],
-      amenities: ['Fan Cooling', 'Free WiFi', 'Room Service', 'TV']
+      amenities: ['Fan Cooling', 'Free WiFi', 'Room Service', 'TV'],
+      rating: 4.6,
+      isPopular: false,
+      testimonial: {
+        text: "Love the traditional feel and natural airflow. Perfect for eco-conscious travelers.",
+        guest: "Kavya T.",
+        photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
+      }
     },
     {
       id: 'deluxe-non-ac',
@@ -51,7 +79,14 @@ const Rooms = () => {
       price: '₹1,800',
       sleeps: 2,
       features: ['Cozy Atmosphere', 'Natural Airflow', 'Budget Friendly', 'Clean'],
-      amenities: ['Fan Cooling', 'Free WiFi', 'Room Service', 'TV']
+      amenities: ['Fan Cooling', 'Free WiFi', 'Room Service', 'TV'],
+      rating: 4.5,
+      isPopular: false,
+      testimonial: {
+        text: "Cozy and comfortable room with great service. Excellent value for the price.",
+        guest: "Suresh P.",
+        photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80"
+      }
     },
     {
       id: 'standard-non-ac',
@@ -60,7 +95,14 @@ const Rooms = () => {
       price: '₹1,500',
       sleeps: 2,
       features: ['Simple Comfort', 'Fresh Air', 'Value for Money', 'Essential'],
-      amenities: ['Fan Cooling', 'Free WiFi', 'Basic Service', 'TV']
+      amenities: ['Fan Cooling', 'Free WiFi', 'Basic Service', 'TV'],
+      rating: 4.4,
+      isPopular: false,
+      testimonial: {
+        text: "Simple, clean, and comfortable. Perfect for budget travelers who value quality.",
+        guest: "Anita J.",
+        photo: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=150&q=80"
+      }
     }
   ];
 
@@ -76,6 +118,19 @@ const Rooms = () => {
             <h1 className="text-5xl md:text-6xl font-serif font-bold text-slate-800 mb-6">
               Luxury <span className="text-emerald-700">Accommodations</span>
             </h1>
+            
+            {/* Social Proof - Average Rating */}
+            <div className="flex items-center justify-center gap-2 mb-8">
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="text-amber-500" size={24} fill="currentColor" />
+                ))}
+              </div>
+              <span className="text-3xl font-bold text-slate-800">4.8</span>
+              <span className="text-slate-600">/5 Average Rating</span>
+              <span className="text-sm text-slate-500">(2,847+ reviews)</span>
+            </div>
+            
             <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
               Choose from our carefully curated selection of premium rooms and suites, 
               each designed to provide the perfect blend of comfort, elegance, and tranquility.

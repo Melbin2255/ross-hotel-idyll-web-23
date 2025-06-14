@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Wifi, Users, Camera, Phone, Star, Sparkles } from 'lucide-react';
+import { Wifi, Users, Camera, Phone, Star, Sparkles, Award } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SettledText from './SettledText';
 import RoomCard from './RoomCard';
@@ -19,7 +20,14 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
       price: "₹4,500",
       sleeps: 4,
       features: ["King Size Bed", "Private Balcony", "Mountain View", "Premium Amenities"],
-      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV", "Mini Bar", "Safe"]
+      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV", "Mini Bar", "Safe"],
+      rating: 4.9,
+      isPopular: true,
+      testimonial: {
+        text: "Absolutely stunning room with incredible mountain views. The luxury amenities made our anniversary perfect!",
+        guest: "Priya S.",
+        photo: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=150&q=80"
+      }
     },
     {
       id: 'deluxe-ac',
@@ -28,7 +36,14 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
       price: "₹3,200",
       sleeps: 3,
       features: ["Queen Size Bed", "Modern Bathroom", "Garden View", "Work Desk"],
-      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV", "Coffee Maker"]
+      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV", "Coffee Maker"],
+      rating: 4.8,
+      isPopular: false,
+      testimonial: {
+        text: "Perfect blend of comfort and elegance. The garden view was so peaceful and relaxing.",
+        guest: "Rajesh M.",
+        photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80"
+      }
     },
     {
       id: 'standard-ac',
@@ -37,13 +52,19 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
       price: "₹2,800",
       sleeps: 5,
       features: ["Multiple Beds", "Spacious Layout", "Family Friendly", "City View"],
-      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV"]
+      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV"],
+      rating: 4.7,
+      isPopular: false,
+      testimonial: {
+        text: "Spacious room perfect for our family of four. Kids loved the extra space to play!",
+        guest: "Meera K.",
+        photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
+      }
     }
   ];
 
   const handleViewAllRooms = () => {
     navigate('/rooms');
-    // Smooth scroll will be handled by the hook in App.tsx
   };
 
   return (
@@ -53,12 +74,12 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-100/20 rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Settled Text - appears when animation completes */}
+        {/* Settled Text */}
         {showSettledText && (
           <SettledText text="Experience Tranquility" isVisible={showSettledText} />
         )}
 
-        {/* Premium Section Header - only show when no settled text */}
+        {/* Premium Section Header */}
         {!showSettledText && (
           <div className="text-center mb-20">
             <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-amber-50 to-emerald-50 rounded-full border border-amber-200/50">
@@ -77,6 +98,18 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
               <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-600 to-amber-700"></div>
               <Star className="text-amber-600" size={24} />
               <div className="w-16 h-[2px] bg-gradient-to-l from-transparent via-amber-600 to-amber-700"></div>
+            </div>
+            
+            {/* Social Proof - Average Rating */}
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="text-amber-500" size={20} fill="currentColor" />
+                ))}
+              </div>
+              <span className="text-2xl font-bold text-slate-800">4.8</span>
+              <span className="text-slate-600">/5 Average Rating</span>
+              <span className="text-sm text-slate-500">(2,847 reviews)</span>
             </div>
             
             <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">

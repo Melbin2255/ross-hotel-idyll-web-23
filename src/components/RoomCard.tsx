@@ -1,9 +1,8 @@
 
 import React from 'react';
 import { Button } from './ui/button';
-import { Users, Star, ArrowRight, Phone } from 'lucide-react';
+import { Users, Star, ArrowRight, Phone, Award } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { smoothScrollToTop } from '../hooks/useSmoothScrollToTop';
 
 interface RoomCardProps {
   room: {
@@ -14,6 +13,13 @@ interface RoomCardProps {
     sleeps: number;
     features: string[];
     amenities: string[];
+    rating: number;
+    isPopular: boolean;
+    testimonial: {
+      text: string;
+      guest: string;
+      photo: string;
+    };
   };
   index: number;
 }
@@ -23,7 +29,6 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
 
   const handleViewDetails = () => {
     navigate(`/rooms/${room.id}`);
-    // Smooth scroll will be handled by the hook in App.tsx
   };
 
   const handleQuickInquiry = () => {
@@ -37,10 +42,21 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
 
   return (
     <div 
-      className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-slate-100 cursor-pointer"
+      className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-slate-100 cursor-pointer relative"
       style={{ animationDelay: `${index * 100}ms` }}
       onClick={handleCardClick}
     >
+      {/* Popular Choice Ribbon */}
+      {room.isPopular && (
+        <div className="absolute top-0 right-0 z-10">
+          <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-bl-2xl rounded-tr-3xl shadow-lg flex items-center gap-2">
+            <Award size={16} />
+            <span className="font-semibold text-sm">Most Requested</span>
+          </div>
+          <div className="absolute -right-1 top-8 w-0 h-0 border-l-4 border-l-red-600 border-t-4 border-t-transparent"></div>
+        </div>
+      )}
+
       {/* Image */}
       <div className="relative h-64 overflow-hidden">
         <img 
@@ -58,7 +74,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
         <div className="absolute top-4 left-4 bg-amber-500/90 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
           <div className="flex items-center gap-1">
             <Star className="text-white" size={14} fill="currentColor" />
-            <span className="text-white font-semibold text-sm">Premium</span>
+            <span className="text-white font-semibold text-sm">{room.rating}</span>
           </div>
         </div>
       </div>
@@ -69,10 +85,11 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
           <h3 className="text-2xl font-serif font-bold text-slate-800 group-hover:text-emerald-700 transition-colors duration-300">
             {room.name}
           </h3>
-          <div className="flex items-center gap-2 text-amber-500">
+          <div className="flex items-center gap-1 text-amber-500">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} size={16} fill="currentColor" />
+              <Star key={i} size={14} fill={i < Math.floor(room.rating) ? "currentColor" : "none"} />
             ))}
+            <span className="text-sm text-slate-600 ml-1">({room.rating})</span>
           </div>
         </div>
 
@@ -95,7 +112,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
         </div>
 
         {/* Amenities */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h4 className="font-semibold text-slate-700 mb-3">Amenities</h4>
           <div className="flex flex-wrap gap-2">
             {room.amenities.slice(0, 3).map((amenity, idx) => (
@@ -108,6 +125,26 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
                 +{room.amenities.length - 3} more
               </span>
             )}
+          </div>
+        </div>
+
+        {/* Guest Testimonial */}
+        <div className="mb-8 p-4 bg-gradient-to-r from-emerald-50 to-amber-50 rounded-xl border border-emerald-100">
+          <p className="text-sm text-slate-700 italic mb-3">"{room.testimonial.text}"</p>
+          <div className="flex items-center gap-3">
+            <img 
+              src={room.testimonial.photo} 
+              alt={room.testimonial.guest}
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <div>
+              <span className="font-semibold text-sm text-slate-800">{room.testimonial.guest}</span>
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="text-amber-400" size={12} fill="currentColor" />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
