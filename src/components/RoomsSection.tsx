@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Wifi, Users, Camera, Phone, Star, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -41,6 +40,11 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
       amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV"]
     }
   ];
+
+  const handleViewAllRooms = () => {
+    navigate('/rooms');
+    // Smooth scroll will be handled by the hook in App.tsx
+  };
 
   return (
     <section id="rooms" className="py-24 bg-gradient-to-b from-slate-50 via-white to-emerald-50/30 relative overflow-hidden">
@@ -92,7 +96,7 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
         {/* View All Rooms Button */}
         <div className="text-center mt-16">
           <button 
-            onClick={() => navigate('/rooms')}
+            onClick={handleViewAllRooms}
             className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-10 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
           >
             <span>View All Rooms</span>

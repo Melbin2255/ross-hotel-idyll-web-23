@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { Users, Star, ArrowRight, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { smoothScrollToTop } from '../hooks/useSmoothScrollToTop';
 
 interface RoomCardProps {
   room: {
@@ -22,6 +23,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
 
   const handleViewDetails = () => {
     navigate(`/rooms/${room.id}`);
+    // Smooth scroll will be handled by the hook in App.tsx
   };
 
   const handleQuickInquiry = () => {
@@ -29,11 +31,15 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
     window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, '_blank');
   };
 
+  const handleCardClick = () => {
+    handleViewDetails();
+  };
+
   return (
     <div 
       className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-slate-100 cursor-pointer"
       style={{ animationDelay: `${index * 100}ms` }}
-      onClick={handleViewDetails}
+      onClick={handleCardClick}
     >
       {/* Image */}
       <div className="relative h-64 overflow-hidden">
