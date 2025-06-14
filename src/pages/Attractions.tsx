@@ -1,13 +1,17 @@
 
 import React from 'react';
 import { MapPin, Clock, Star, Camera, ArrowRight, Phone } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 const Attractions = () => {
+  const navigate = useNavigate();
+
   const attractions = [
     {
       id: 1,
+      slug: 'munnar-hill-station',
       name: 'Munnar Hill Station',
       distance: '45 km',
       time: '1.5 hours',
@@ -18,6 +22,7 @@ const Attractions = () => {
     },
     {
       id: 2,
+      slug: 'thekkady-wildlife-sanctuary',
       name: 'Thekkady Wildlife Sanctuary',
       distance: '65 km',
       time: '2 hours',
@@ -28,6 +33,7 @@ const Attractions = () => {
     },
     {
       id: 3,
+      slug: 'vagamon-meadows',
       name: 'Vagamon Meadows',
       distance: '35 km',
       time: '1 hour',
@@ -38,6 +44,7 @@ const Attractions = () => {
     },
     {
       id: 4,
+      slug: 'idukki-arch-dam',
       name: 'Idukki Arch Dam',
       distance: '25 km',
       time: '45 minutes',
@@ -48,6 +55,7 @@ const Attractions = () => {
     },
     {
       id: 5,
+      slug: 'ramakkalmedu',
       name: 'Ramakkalmedu',
       distance: '40 km',
       time: '1.5 hours',
@@ -58,6 +66,7 @@ const Attractions = () => {
     },
     {
       id: 6,
+      slug: 'nedumkandam',
       name: 'Nedumkandam',
       distance: '15 km',
       time: '30 minutes',
@@ -67,6 +76,10 @@ const Attractions = () => {
       highlights: ['Spice Gardens', 'Local Culture', 'Cardamom Hills', 'Traditional Markets']
     }
   ];
+
+  const handleViewDetails = (slug: string) => {
+    navigate(`/attractions/${slug}`);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -167,7 +180,10 @@ const Attractions = () => {
                   </div>
 
                   {/* Action Button */}
-                  <button className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-4 rounded-xl font-semibold group/btn transition-all duration-300 flex items-center justify-center gap-3">
+                  <button 
+                    onClick={() => handleViewDetails(attraction.slug)}
+                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-4 rounded-xl font-semibold group/btn transition-all duration-300 flex items-center justify-center gap-3"
+                  >
                     <Camera size={18} />
                     <span>View Details</span>
                     <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform duration-300" />

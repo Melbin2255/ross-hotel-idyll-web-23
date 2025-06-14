@@ -9,6 +9,7 @@ import Rooms from "./pages/Rooms";
 import RoomDetail from "./pages/RoomDetail";
 import Facilities from "./pages/Facilities";
 import Attractions from "./pages/Attractions";
+import AttractionDetail from "./pages/AttractionDetail";
 import Gallery from "./pages/Gallery";
 import NotFound from "./pages/NotFound";
 
@@ -23,9 +24,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/rooms" element={<Rooms />} />
-          <Route path="/rooms/:roomId" element={<RoomDetail />} />
+          <Route path="/rooms/:room" element={<RoomDetail />} />
           <Route path="/facilities" element={<Facilities />} />
           <Route path="/attractions" element={<Attractions />} />
+          <Route path="/attractions/:slug" element={<AttractionDetail />} />
           <Route path="/gallery" element={<Gallery />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
