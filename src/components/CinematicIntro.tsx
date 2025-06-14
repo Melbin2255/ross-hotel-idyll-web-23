@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 interface CinematicIntroProps {
   isVisible: boolean;
@@ -8,19 +7,19 @@ interface CinematicIntroProps {
 }
 
 const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }) => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { duration: 0.8, ease: "easeInOut" }
+      transition: { duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }
     },
     exit: { 
       opacity: 0,
-      transition: { duration: 1.2, ease: "easeInOut" }
+      transition: { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }
     }
   };
 
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { 
       opacity: 0, 
       scale: 0.8,
@@ -32,7 +31,7 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
       y: 0,
       transition: { 
         duration: 1.2, 
-        ease: "easeInOut",
+        ease: [0.43, 0.13, 0.23, 0.96],
         delay: 0.3
       }
     },
@@ -41,20 +40,27 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
       scale: 1.1,
       y: -20,
       transition: { 
-        duration: 1, 
-        ease: "easeInOut" 
+        duration: 0.5,
+        ease: [0.43, 0.13, 0.23, 0.96]
       }
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isVisible) {
+      // Check if intro has been shown this session
+      const hasShownIntro = sessionStorage.getItem('hasShownIntro');
+      if (hasShownIntro) {
+        onComplete();
+        return;
+      }
+
       // Disable scrolling during intro
       document.body.style.overflow = 'hidden';
       
       // Complete animation after 4 seconds
       const timer = setTimeout(() => {
-        onComplete();
+        handleComplete();
       }, 4000);
 
       return () => {
@@ -64,15 +70,26 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
     }
   }, [isVisible, onComplete]);
 
+  const handleComplete = () => {
+    // Mark intro as shown in this session
+    sessionStorage.setItem('hasShownIntro', 'true');
+    onComplete();
+  };
+
+  const handleClick = () => {
+    handleComplete();
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center cursor-pointer"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
+          onClick={handleClick}
         >
           {/* Blurred background with hero image */}
           <div className="absolute inset-0">
@@ -98,30 +115,9 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
               className="text-lg md:text-2xl font-light text-gray-300 mb-4 tracking-wide"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
             >
               Welcome to
             </motion.p>
-            
-            {/* R J HOTEL */}
-            <motion.h1 
-              className="text-5xl md:text-8xl lg:text-9xl font-serif font-bold tracking-[0.2em] md:tracking-[0.3em]"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
-            >
-              <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent">
-                R J HOTEL
-              </span>
-            </motion.h1>
-
-            {/* Subtle ambient effect */}
-            <motion.div
-              className="absolute -inset-10 bg-gradient-radial from-amber-500/10 via-transparent to-transparent blur-3xl"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.5, duration: 2 }}
-            />
           </motion.div>
         </motion.div>
       )}

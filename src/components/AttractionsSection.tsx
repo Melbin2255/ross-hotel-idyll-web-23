@@ -1,8 +1,10 @@
-
 import React from 'react';
 import { MapPin, Clock, Camera } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const AttractionsSection = () => {
+  const navigate = useNavigate();
+
   const attractions = [
     {
       name: "Munnar",
@@ -54,15 +56,23 @@ const AttractionsSection = () => {
     }
   ];
 
+  const handleAttractionClick = (attractionName: string) => {
+    // Navigate to attractions page with the specific attraction name as a parameter
+    navigate(`/attractions?place=${encodeURIComponent(attractionName.toLowerCase())}`);
+  };
+
   return (
     <section id="attractions" className="py-20 bg-gradient-to-b from-emerald-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-emerald-800 mb-6">
+        <div 
+          className="text-center mb-16 cursor-pointer group"
+          onClick={() => navigate('/attractions')}
+        >
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-emerald-800 mb-6 group-hover:text-emerald-700 transition-colors">
             Explore Idukki
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-amber-600 to-amber-700 mx-auto mb-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-amber-600 to-amber-700 mx-auto mb-6 group-hover:from-amber-500 group-hover:to-amber-600 transition-colors"></div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Discover the enchanting beauty of Kerala's hill country. From misty mountains to 
             wildlife sanctuaries, every destination offers unforgettable experiences.
@@ -74,8 +84,9 @@ const AttractionsSection = () => {
           {attractions.map((attraction, index) => (
             <div 
               key={attraction.name}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105 group"
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105 group cursor-pointer"
               style={{ animationDelay: `${index * 150}ms` }}
+              onClick={() => handleAttractionClick(attraction.name)}
             >
               {/* Attraction Image */}
               <div className="relative overflow-hidden h-56">
@@ -132,7 +143,13 @@ const AttractionsSection = () => {
                 </div>
 
                 {/* CTA Button */}
-                <button className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-4 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click event
+                    handleAttractionClick(attraction.name);
+                  }}
+                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-4 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                >
                   Plan Visit
                 </button>
               </div>
