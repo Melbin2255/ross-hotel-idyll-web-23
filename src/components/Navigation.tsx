@@ -20,14 +20,30 @@ const Navigation = () => {
     { name: 'Home', href: '/' },
     { name: 'Luxury Suites', href: '/rooms' },
     { name: 'Facilities', href: '/facilities' },
-    { name: 'Attractions', href: '#attractions' },
-    { name: 'Gallery', href: '#gallery' },
+    { name: 'Attractions', href: '/attractions' },
+    { name: 'Gallery', href: '/gallery' },
     { name: 'Contact', href: '#contact' },
   ];
 
   const isActive = (href: string) => {
     if (href === '/') return location.pathname === '/';
+    if (href.startsWith('#')) return false; // Handle anchor links differently
     return location.pathname.startsWith(href);
+  };
+
+  const handleNavClick = (href: string) => {
+    setIsOpen(false);
+    if (href.startsWith('#')) {
+      // Handle anchor links for homepage sections
+      if (location.pathname !== '/') {
+        window.location.href = `/${href}`;
+      } else {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
   };
 
   return (
@@ -69,21 +85,34 @@ const Navigation = () => {
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-8">
             {menuItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href.startsWith('#') ? `/${item.href}` : item.href}
-                className={`font-medium transition-all duration-300 relative group py-2 ${
-                  isActive(item.href) 
-                    ? (isScrolled ? 'text-amber-600' : 'text-amber-400') 
-                    : (isScrolled ? 'text-slate-700 hover:text-amber-600' : 'text-white/90 hover:text-amber-400')
-                }`}
-              >
-                {item.name}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-600 transition-all duration-300 ${
-                  isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
-                }`}></span>
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 opacity-50 transition-all duration-500 group-hover:w-full delay-100"></span>
-              </Link>
+              item.href.startsWith('#') ? (
+                <button
+                  key={item.name}
+                  onClick={() => handleNavClick(item.href)}
+                  className={`font-medium transition-all duration-300 relative group py-2 ${
+                    isScrolled ? 'text-slate-700 hover:text-amber-600' : 'text-white/90 hover:text-amber-400'
+                  }`}
+                >
+                  {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-600 transition-all duration-300 group-hover:w-full"></span>
+                </button>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`font-medium transition-all duration-300 relative group py-2 ${
+                    isActive(item.href) 
+                      ? (isScrolled ? 'text-amber-600' : 'text-amber-400') 
+                      : (isScrolled ? 'text-slate-700 hover:text-amber-600' : 'text-white/90 hover:text-amber-400')
+                  }`}
+                >
+                  {item.name}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-600 transition-all duration-300 ${
+                    isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 opacity-50 transition-all duration-500 group-hover:w-full delay-100"></span>
+                </Link>
+              )
             ))}
             <a
               href="tel:+919876543210"
@@ -115,20 +144,34 @@ const Navigation = () => {
           <div className="lg:hidden absolute top-24 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-xl">
             <div className="px-6 py-8 space-y-6">
               {menuItems.map((item, index) => (
-                <Link
-                  key={item.name}
-                  to={item.href.startsWith('#') ? `/${item.href}` : item.href}
-                  className={`block font-medium py-3 transition-all duration-300 border-b border-slate-100 last:border-b-0 relative group ${
-                    isActive(item.href) ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  <span className="relative z-10">{item.name}</span>
-                  <div className={`absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-amber-500 to-amber-600 transition-transform duration-300 origin-top ${
-                    isActive(item.href) ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-100'
-                  }`}></div>
-                </Link>
+                item.href.startsWith('#') ? (
+                  <button
+                    key={item.name}
+                    onClick={() => handleNavClick(item.href)}
+                    className={`block w-full text-left font-medium py-3 transition-all duration-300 border-b border-slate-100 last:border-b-0 relative group ${
+                      'text-slate-700 hover:text-amber-600'
+                    }`}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <span className="relative z-10">{item.name}</span>
+                    <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-amber-500 to-amber-600 transition-transform duration-300 origin-top scale-y-0 group-hover:scale-y-100"></div>
+                  </button>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`block font-medium py-3 transition-all duration-300 border-b border-slate-100 last:border-b-0 relative group ${
+                      isActive(item.href) ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <span className="relative z-10">{item.name}</span>
+                    <div className={`absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-amber-500 to-amber-600 transition-transform duration-300 origin-top ${
+                      isActive(item.href) ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-100'
+                    }`}></div>
+                  </Link>
+                )
               ))}
               <a
                 href="tel:+919876543210"

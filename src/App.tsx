@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import Rooms from "./pages/Rooms";
 import RoomDetail from "./pages/RoomDetail";
 import Facilities from "./pages/Facilities";
+import Attractions from "./pages/Attractions";
+import Gallery from "./pages/Gallery";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ const App = () => (
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/rooms/:roomId" element={<RoomDetail />} />
           <Route path="/facilities" element={<Facilities />} />
+          <Route path="/attractions" element={<Attractions />} />
+          <Route path="/gallery" element={<Gallery />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
