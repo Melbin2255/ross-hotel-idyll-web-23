@@ -1,6 +1,8 @@
+
 import React, { useRef, useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
+import QuickLinksSection from '../components/QuickLinksSection';
 import RoomsSection from '../components/RoomsSection';
 import AttractionsSection from '../components/AttractionsSection';
 import ContactSection from '../components/ContactSection';
@@ -50,6 +52,8 @@ const Index = () => {
           scrollY={scrollY}
         />
       )}
+      
+      <QuickLinksSection />
       
       <div ref={roomsRef}>
         <RoomsSection showSettledText={isSettled} />

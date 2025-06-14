@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { MapPin, Star, Wifi, ArrowDown } from 'lucide-react';
+import { MapPin, Star, Wifi, ArrowDown, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
@@ -72,8 +73,8 @@ const HeroSection = () => {
           
           {/* Premium CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="#rooms"
+            <Link
+              to="/rooms"
               className="group relative bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white px-10 py-5 rounded-2xl font-semibold text-lg overflow-hidden transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/25"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -81,7 +82,7 @@ const HeroSection = () => {
                 Explore Our Suites
                 <ArrowDown className="group-hover:translate-y-1 transition-transform duration-300" size={20} />
               </span>
-            </a>
+            </Link>
             <a
               href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20booking%20at%20RJ%20Ross%20Hotel"
               target="_blank"
@@ -89,7 +90,10 @@ const HeroSection = () => {
               className="group relative bg-white/10 backdrop-blur-md text-white px-10 py-5 rounded-2xl font-semibold text-lg border-2 border-white/30 overflow-hidden transition-all duration-500 hover:bg-white/20 hover:border-white/50 hover:scale-105"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10">WhatsApp Concierge</span>
+              <span className="relative z-10 flex items-center gap-3">
+                <Phone size={20} />
+                WhatsApp Concierge
+              </span>
             </a>
           </div>
         </div>
