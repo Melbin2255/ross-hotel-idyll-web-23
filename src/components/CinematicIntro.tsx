@@ -18,8 +18,34 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
       transition: { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }
     }
   };
-
   const textVariants: Variants = {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.9,
+      y: 10
+    },
+    visible: { 
+      opacity: 0.9,
+      scale: 1,
+      y: 0,
+      transition: { 
+        duration: 0.8, 
+        ease: [0.43, 0.13, 0.23, 0.96],
+        delay: 0.2
+      }
+    },
+    exit: { 
+      opacity: 0,
+      scale: 1.05,
+      y: -10,
+      transition: { 
+        duration: 0.4,
+        ease: [0.43, 0.13, 0.23, 0.96]
+      }
+    }
+  };
+
+  const hotelNameVariants: Variants = {
     hidden: { 
       opacity: 0, 
       scale: 0.8,
@@ -32,7 +58,7 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
       transition: { 
         duration: 1.2, 
         ease: [0.43, 0.13, 0.23, 0.96],
-        delay: 0.3
+        delay: 0.4 // Reduced delay for better flow
       }
     },
     exit: { 
@@ -106,18 +132,24 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
           <motion.div
             className="relative z-10 text-center text-white px-6"
             variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
           >
             {/* Welcome to */}
             <motion.p 
-              className="text-lg md:text-2xl font-light text-gray-300 mb-4 tracking-wide"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              className="text-lg md:text-2xl font-light text-gray-300/90 tracking-wider mb-2"
+              variants={textVariants}
             >
               Welcome to
             </motion.p>
+            
+            {/* Hotel Name */}
+            <motion.h1 
+              className="text-6xl md:text-8xl font-serif font-bold"
+              variants={hotelNameVariants}
+            >
+              <span className="block text-amber-400 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent drop-shadow-2xl">
+                RJ Ross Hotel
+              </span>
+            </motion.h1>
           </motion.div>
         </motion.div>
       )}

@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Phone } from 'lucide-react';
 
 interface EnhancedHeroSectionProps {
@@ -12,7 +11,7 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({ showContent }
     window.open('https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20plan%20my%20stay%20at%20RJ%20Ross%20Hotel', '_blank');
   };
 
-  const contentVariants = {
+  const contentVariants: Variants = {
     hidden: { 
       opacity: 0, 
       y: 30,
@@ -24,18 +23,18 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({ showContent }
       scale: 1,
       transition: { 
         duration: 1.5, 
-        ease: "easeOut",
+        ease: [0.43, 0.13, 0.23, 0.96],
         staggerChildren: 0.3
       }
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }
     }
   };
 
@@ -44,7 +43,7 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({ showContent }
       {/* Enhanced Background with Ambient Effects */}
       <div className="absolute inset-0">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105"
+          className="absolute inset-0 bg-cover bg-[center_top] md:bg-center bg-no-repeat transform scale-105"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80')",
           }}
@@ -92,7 +91,7 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({ showContent }
       </div>
       
       {/* Content with Staggered Animation */}
-      <div className="relative z-10 text-center text-white px-6 max-w-5xl mx-auto">
+      <div className="relative z-10 text-center text-white px-6 max-w-5xl mx-auto pt-16 md:pt-0">
         <motion.div
           variants={contentVariants}
           initial="hidden"
