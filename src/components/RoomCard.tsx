@@ -20,10 +20,20 @@ interface RoomCardProps {
 const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
   const navigate = useNavigate();
 
+  const handleViewDetails = () => {
+    navigate(`/rooms/${room.id}`);
+  };
+
+  const handleQuickInquiry = () => {
+    const message = `Hello, I would like to inquire about the ${room.name} room.`;
+    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   return (
     <div 
-      className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-slate-100"
+      className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-slate-100 cursor-pointer"
       style={{ animationDelay: `${index * 100}ms` }}
+      onClick={handleViewDetails}
     >
       {/* Image */}
       <div className="relative h-64 overflow-hidden">
@@ -96,9 +106,9 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-3">
+        <div className="space-y-3" onClick={(e) => e.stopPropagation()}>
           <Button 
-            onClick={() => navigate(`/rooms/${room.id}`)}
+            onClick={handleViewDetails}
             className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-3 rounded-xl font-semibold group/btn transition-all duration-300"
           >
             <span>View Details</span>
@@ -107,7 +117,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, index }) => {
           
           <Button 
             variant="outline"
-            onClick={() => window.open('https://wa.me/919876543210', '_blank')}
+            onClick={handleQuickInquiry}
             className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 py-3 rounded-xl font-semibold transition-all duration-300"
           >
             <Phone size={16} className="mr-2" />

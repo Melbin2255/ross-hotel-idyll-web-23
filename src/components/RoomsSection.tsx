@@ -1,39 +1,44 @@
+
 import React from 'react';
-import { Wifi, Users, Camera, Phone, Star, MapPin, Sparkles } from 'lucide-react';
+import { Wifi, Users, Camera, Phone, Star, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import SettledText from './SettledText';
+import RoomCard from './RoomCard';
 
 interface RoomsSectionProps {
   showSettledText?: boolean;
 }
 
 const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
+  const navigate = useNavigate();
+
   const rooms = [
     {
-      id: 1,
+      id: 'premium-suite-ac',
       name: "Premium Suite A/C",
       image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80",
-      capacity: "2-3 Guests",
+      price: "₹4,500",
+      sleeps: 4,
       features: ["King Size Bed", "Private Balcony", "Mountain View", "Premium Amenities"],
-      description: "Indulge in unparalleled luxury with our signature suite featuring panoramic views of Idukki's pristine landscapes and bespoke amenities.",
-      badge: "Most Popular"
+      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV", "Mini Bar", "Safe"]
     },
     {
-      id: 2,
+      id: 'deluxe-ac',
       name: "Deluxe A/C Room",
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80",
-      capacity: "2 Guests",
-      features: ["Queen Size Bed", "Modern Bathroom", "AC", "Free WiFi"],
-      description: "Elegant sophistication meets contemporary comfort in our thoughtfully designed deluxe accommodations.",
-      badge: "Best Value"
+      image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80",
+      price: "₹3,200",
+      sleeps: 3,
+      features: ["Queen Size Bed", "Modern Bathroom", "Garden View", "Work Desk"],
+      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV", "Coffee Maker"]
     },
     {
-      id: 3,
+      id: 'standard-ac',
       name: "Family Suite",
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80",
-      capacity: "4-5 Guests",
-      features: ["Multiple Beds", "Spacious Layout", "Family Friendly", "Garden View"],
-      description: "Spacious luxury designed for families, offering comfort, privacy, and unforgettable memories in Kerala's hill country.",
-      badge: "Family Choice"
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
+      price: "₹2,800",
+      sleeps: 5,
+      features: ["Multiple Beds", "Spacious Layout", "Family Friendly", "City View"],
+      amenities: ["Air Conditioning", "Free WiFi", "Room Service", "TV"]
     }
   ];
 
@@ -80,99 +85,19 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
         {/* Premium Rooms Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {rooms.map((room, index) => (
-            <div 
-              key={room.id} 
-              className="group bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-700 transform hover:scale-105 border border-slate-100 relative"
-              style={{ animationDelay: `${index * 200}ms` }}
-            >
-              {/* Premium Badge */}
-              <div className="absolute top-6 left-6 z-20 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-semibold rounded-full shadow-lg">
-                {room.badge}
-              </div>
-
-              {/* Room Image */}
-              <div className="relative overflow-hidden h-72">
-                <img
-                  src={room.image}
-                  alt={room.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {/* Capacity Badge */}
-                <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-2xl shadow-lg">
-                  <span className="text-slate-800 font-semibold text-sm flex items-center gap-2">
-                    <Users size={16} className="text-emerald-600" />
-                    {room.capacity}
-                  </span>
-                </div>
-
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-                  <button className="bg-white text-emerald-800 px-6 py-3 rounded-full font-semibold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 hover:bg-emerald-50">
-                    View Gallery
-                  </button>
-                </div>
-              </div>
-
-              {/* Premium Content */}
-              <div className="p-8">
-                <h3 className="text-2xl font-serif font-bold text-slate-800 mb-4 group-hover:text-emerald-800 transition-colors duration-300">
-                  {room.name}
-                </h3>
-                
-                <p className="text-slate-600 mb-6 leading-relaxed font-light">
-                  {room.description}
-                </p>
-
-                {/* Premium Features */}
-                <div className="mb-8">
-                  <h4 className="font-semibold text-slate-700 mb-3 flex items-center gap-2">
-                    <Sparkles size={16} className="text-amber-600" />
-                    Exclusive Features
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {room.features.map((feature, idx) => (
-                      <span 
-                        key={idx}
-                        className="bg-gradient-to-r from-emerald-50 to-amber-50 text-slate-700 px-4 py-2 rounded-full text-sm font-medium border border-emerald-100 hover:border-emerald-200 transition-colors duration-300"
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Premium Amenities */}
-                <div className="flex items-center gap-6 mb-8 text-slate-500">
-                  <div className="flex items-center gap-2 hover:text-emerald-600 transition-colors duration-300">
-                    <Wifi size={18} />
-                    <span className="text-sm font-medium">Premium WiFi</span>
-                  </div>
-                  <div className="flex items-center gap-2 hover:text-amber-600 transition-colors duration-300">
-                    <Camera size={18} />
-                    <span className="text-sm font-medium">Scenic Views</span>
-                  </div>
-                </div>
-
-                {/* Premium CTA Buttons */}
-                <div className="flex gap-4">
-                  <button className="flex-1 bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 text-white px-6 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
-                    <span className="relative z-10">Reserve Now</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </button>
-                  <a
-                    href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20the%20Premium%20Suite%20A/C"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-4 border-2 border-amber-500 text-amber-600 rounded-xl font-semibold hover:bg-amber-500 hover:text-white transition-all duration-300 hover:shadow-lg flex items-center justify-center"
-                  >
-                    <Phone size={18} />
-                  </a>
-                </div>
-              </div>
-            </div>
+            <RoomCard key={room.id} room={room} index={index} />
           ))}
+        </div>
+
+        {/* View All Rooms Button */}
+        <div className="text-center mt-16">
+          <button 
+            onClick={() => navigate('/rooms')}
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-10 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
+          >
+            <span>View All Rooms</span>
+            <Camera size={20} />
+          </button>
         </div>
 
         {/* Premium Bottom CTA */}

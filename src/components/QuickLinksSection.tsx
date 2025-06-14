@@ -25,7 +25,7 @@ const QuickLinksSection = () => {
       title: 'Explore Idukki',
       description: 'Discover the natural beauty and attractions nearby',
       icon: MapPin,
-      href: '#attractions',
+      href: '/attractions',
       color: 'from-blue-500 to-blue-600',
       image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80'
     },
@@ -33,7 +33,7 @@ const QuickLinksSection = () => {
       title: 'Gallery',
       description: 'Browse our collection of stunning property photos',
       icon: Camera,
-      href: '#gallery',
+      href: '/gallery',
       color: 'from-purple-500 to-purple-600',
       image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=600&q=80'
     }
@@ -71,7 +71,7 @@ const QuickLinksSection = () => {
           {quickLinks.map((link, index) => (
             <Link
               key={link.title}
-              to={link.href.startsWith('#') ? `/${link.href}` : link.href}
+              to={link.href}
               className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-slate-100"
               style={{ animationDelay: `${index * 100}ms` }}
             >
