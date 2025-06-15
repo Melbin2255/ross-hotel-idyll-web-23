@@ -11,13 +11,14 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }
+      transition: { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] } // Faster initial fade
     },
     exit: { 
       opacity: 0,
-      transition: { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }
+      transition: { duration: 0.4, ease: [0.43, 0.13, 0.23, 0.96] }
     }
   };
+
   const textVariants: Variants = {
     hidden: { 
       opacity: 0, 
@@ -29,9 +30,9 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
       scale: 1,
       y: 0,
       transition: { 
-        duration: 0.8, 
+        duration: 0.6, 
         ease: [0.43, 0.13, 0.23, 0.96],
-        delay: 0.2
+        delay: 0.1 // Reduced delay
       }
     },
     exit: { 
@@ -47,26 +48,21 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
 
   const hotelNameVariants: Variants = {
     hidden: { 
-      opacity: 0, 
-      scale: 0.8,
-      y: 20
+      opacity: 1,
+      scale: 1,
+      y: 0
     },
     visible: { 
-      opacity: 1, 
+      opacity: 1,
+      scale: 1,
+      y: 0
+    },
+    exit: { 
+      opacity: 0,
       scale: 1,
       y: 0,
       transition: { 
-        duration: 1.2, 
-        ease: [0.43, 0.13, 0.23, 0.96],
-        delay: 0.4 // Reduced delay for better flow
-      }
-    },
-    exit: { 
-      opacity: 0, 
-      scale: 1.1,
-      y: -20,
-      transition: { 
-        duration: 0.5,
+        duration: 0.4,
         ease: [0.43, 0.13, 0.23, 0.96]
       }
     }
@@ -84,10 +80,10 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
       // Disable scrolling during intro
       document.body.style.overflow = 'hidden';
       
-      // Complete animation after 4 seconds
+      // Complete animation after 2 seconds
       const timer = setTimeout(() => {
         handleComplete();
-      }, 4000);
+      }, 2000);
 
       return () => {
         clearTimeout(timer);
@@ -132,10 +128,9 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
           <motion.div
             className="relative z-10 text-center text-white px-6"
             variants={textVariants}
-          >
-            {/* Welcome to */}
+          >            {/* Welcome to */}
             <motion.p 
-              className="text-lg md:text-2xl font-light text-gray-300/90 tracking-wider mb-2"
+              className="text-lg md:text-2xl font-light text-gray-300/90 tracking-wider mb-3"
               variants={textVariants}
             >
               Welcome to
@@ -143,10 +138,10 @@ const CinematicIntro: React.FC<CinematicIntroProps> = ({ isVisible, onComplete }
             
             {/* Hotel Name */}
             <motion.h1 
-              className="text-6xl md:text-8xl font-serif font-bold"
+              className="text-6xl md:text-8xl font-serif font-bold leading-tight"
               variants={hotelNameVariants}
             >
-              <span className="block text-amber-400 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent drop-shadow-2xl">
+              <span className="inline-block text-amber-400 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent drop-shadow-2xl">
                 RJ Ross Hotel
               </span>
             </motion.h1>
