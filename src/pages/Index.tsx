@@ -1,4 +1,6 @@
+
 import React, { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Navigation from '../components/Navigation';
 import CinematicIntro from '../components/CinematicIntro';
 import EnhancedHeroSection from '../components/EnhancedHeroSection';
@@ -45,8 +47,37 @@ const Index = () => {
     }, 300);
   };
 
+  // Page transition variants
+  const pageVariants = {
+    initial: { opacity: 0 },
+    animate: { 
+      opacity: 1,
+      transition: { 
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen relative">
+    <motion.div 
+      className="min-h-screen relative"
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+    >
       {/* Cinematic Intro */}
       <CinematicIntro 
         isVisible={showIntro} 
@@ -54,21 +85,67 @@ const Index = () => {
       />
       
       {/* Navigation - only show after intro */}
-      {!showIntro && <Navigation />}
+      {!showIntro && (
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <Navigation />
+        </motion.div>
+      )}
       
       <div ref={heroRef}>
         <EnhancedHeroSection showContent={showHeroContent} />
       </div>
       
-      <QuickLinksSection />
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <QuickLinksSection />
+      </motion.div>
       
       <div ref={roomsRef}>
-        <RoomsSection showSettledText={isSettled} />
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <RoomsSection showSettledText={isSettled} />
+        </motion.div>
       </div>
-      <AttractionsSection />
-      <ContactSection />
-      <Footer />
-    </div>
+
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <AttractionsSection />
+      </motion.div>
+
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <ContactSection />
+      </motion.div>
+
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <Footer />
+      </motion.div>
+    </motion.div>
   );
 };
 
