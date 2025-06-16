@@ -1,7 +1,7 @@
-
-import React from 'react';
+import React, { useRef } from 'react';
 import { Wifi, Users, Camera, Phone, Star, Sparkles, Award } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion, useInView, Variants } from 'framer-motion';
 import SettledText from './SettledText';
 import RoomCard from './RoomCard';
 
@@ -11,6 +11,13 @@ interface RoomsSectionProps {
 
 const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
   const navigate = useNavigate();
+  const headerRef = useRef(null);
+  const gridRef = useRef(null);
+  const ctaRef = useRef(null);
+  
+  const isHeaderInView = useInView(headerRef, { once: true, amount: 0.3 });
+  const isGridInView = useInView(gridRef, { once: true, amount: 0.1 });
+  const isCtaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   const rooms = [
     {
@@ -63,6 +70,71 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
     }
   ];
 
+  // Animation variants for header elements
+  const headerVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  const staggeredHeaderVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const socialProofVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
+
+  // Grid animation variants
+  const gridContainerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const roomCardMotionVariants: Variants = {
+    hidden: { 
+      opacity: 0, 
+      y: 20,
+      scale: 0.98
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { 
+        duration: 0.4,
+        ease: "easeOut"
+      },
+    },
+  };
+
+  // CTA animation variants
+  const ctaVariants: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
   const handleViewAllRooms = () => {
     navigate('/rooms');
   };
@@ -79,29 +151,47 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
           <SettledText text="Experience Tranquility" isVisible={showSettledText} />
         )}
 
-        {/* Premium Section Header */}
+        {/* Animated Section Header */}
         {!showSettledText && (
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-amber-50 to-emerald-50 rounded-full border border-amber-200/50">
+          <motion.div 
+            ref={headerRef}
+            className="text-center mb-20"
+            variants={staggeredHeaderVariants}
+            initial="hidden"
+            animate={isHeaderInView ? "visible" : "hidden"}
+          >
+            <motion.div 
+              variants={headerVariants}
+              className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-amber-50 to-emerald-50 rounded-full border border-amber-200/50"
+            >
               <Sparkles className="text-amber-600" size={20} />
               <span className="text-amber-800 font-medium tracking-wide text-sm">LUXURY ACCOMMODATIONS</span>
               <Sparkles className="text-amber-600" size={20} />
-            </div>
+            </motion.div>
             
-            <h2 className="text-5xl md:text-7xl font-serif font-bold mb-8">
+            <motion.h2 
+              variants={headerVariants}
+              className="text-5xl md:text-7xl font-serif font-bold mb-8"
+            >
               <span className="bg-gradient-to-r from-slate-800 via-emerald-800 to-slate-800 bg-clip-text text-transparent">
                 Rooms & Suites
               </span>
-            </h2>
+            </motion.h2>
             
-            <div className="flex items-center justify-center gap-4 mb-8">
+            <motion.div 
+              variants={headerVariants}
+              className="flex items-center justify-center gap-4 mb-8"
+            >
               <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-600 to-amber-700"></div>
               <Star className="text-amber-600" size={24} />
               <div className="w-16 h-[2px] bg-gradient-to-l from-transparent via-amber-600 to-amber-700"></div>
-            </div>
+            </motion.div>
             
-            {/* Social Proof - Average Rating */}
-            <div className="flex items-center justify-center gap-2 mb-6">
+            {/* Animated Social Proof */}
+            <motion.div 
+              variants={socialProofVariants}
+              className="flex items-center justify-center gap-2 mb-6"
+            >
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="text-amber-500" size={20} fill="currentColor" />
@@ -110,35 +200,59 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
               <span className="text-2xl font-bold text-slate-800">4.8</span>
               <span className="text-slate-600">/5 Average Rating</span>
               <span className="text-sm text-slate-500">(2,847 reviews)</span>
-            </div>
+            </motion.div>
             
-            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+            <motion.p 
+              variants={headerVariants}
+              className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light"
+            >
               Discover our <span className="text-emerald-700 font-medium">meticulously crafted accommodations</span>, each offering an exquisite blend 
               of <span className="text-amber-700 font-medium">timeless luxury</span>, contemporary comfort, and breathtaking views of Kerala's pristine hill country.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         )}
 
-        {/* Premium Rooms Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {/* Animated Rooms Grid */}
+        <motion.div 
+          ref={gridRef}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
+          variants={gridContainerVariants}
+          initial="hidden"
+          animate={isGridInView ? "visible" : "hidden"}
+        >
           {rooms.map((room, index) => (
-            <RoomCard key={room.id} room={room} index={index} />
+            <motion.div key={room.id} variants={roomCardMotionVariants}>
+              <RoomCard room={room} index={index} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* View All Rooms Button */}
-        <div className="text-center mt-16">
-          <button 
+        {/* Animated View All Rooms Button */}
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isGridInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
+        >
+          <motion.button 
             onClick={handleViewAllRooms}
             className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-10 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
           >
             <span>View All Rooms</span>
             <Camera size={20} />
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        {/* Premium Bottom CTA */}
-        <div className="text-center mt-20">
+        {/* Animated Premium Bottom CTA */}
+        <motion.div 
+          ref={ctaRef}
+          className="text-center mt-20"
+          variants={ctaVariants}
+          initial="hidden"
+          animate={isCtaInView ? "visible" : "hidden"}
+        >
           <div className="bg-gradient-to-r from-slate-800 via-emerald-900 to-slate-800 rounded-3xl p-12 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 via-transparent to-emerald-600/10"></div>
             <div className="relative z-10">
@@ -148,19 +262,21 @@ const RoomsSection = ({ showSettledText = false }: RoomsSectionProps) => {
               <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
                 Let our concierge team craft the perfect stay tailored to your preferences
               </p>
-              <a
+              <motion.a
                 href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20room%20availability%20and%20luxury%20packages"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:shadow-2xl hover:shadow-amber-500/25 transition-all duration-500 transform hover:scale-105 relative overflow-hidden group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <Phone size={24} className="relative z-10" />
                 <span className="relative z-10">Check Premium Availability</span>
-              </a>
+              </motion.a>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
