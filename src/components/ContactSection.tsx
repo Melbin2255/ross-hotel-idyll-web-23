@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, MapPin, Clock, Wifi, Users, Camera } from 'lucide-react';
+import { Phone, MapPin, Clock, Wifi, Users, Camera, ExternalLink } from 'lucide-react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -47,7 +47,7 @@ const ContactSection = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
     }
   };
 
@@ -56,7 +56,7 @@ const ContactSection = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }
     }
   };
 
@@ -66,7 +66,7 @@ const ContactSection = () => {
       opacity: 1, 
       y: 0, 
       scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
     }
   };
 
@@ -75,7 +75,7 @@ const ContactSection = () => {
     visible: { 
       opacity: 1, 
       x: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
     }
   };
 
@@ -146,7 +146,6 @@ const ContactSection = () => {
               Contact Information
             </h3>
 
-            {/* Contact Details */}
             <motion.div 
               className="space-y-6 mb-10"
               variants={containerVariants}
@@ -220,7 +219,6 @@ const ContactSection = () => {
               </motion.div>
             </motion.div>
 
-            {/* Animated Quick Facilities */}
             <motion.div 
               className="bg-white rounded-2xl p-6 shadow-lg"
               variants={cardVariants}
@@ -254,7 +252,6 @@ const ContactSection = () => {
               </motion.div>
             </motion.div>
 
-            {/* Animated WhatsApp CTA */}
             <motion.div 
               className="mt-8"
               variants={itemVariants}
@@ -294,7 +291,6 @@ const ContactSection = () => {
               className="space-y-6"
               variants={containerVariants}
             >
-              {/* Form fields with individual animations */}
               {[
                 { id: 'name', label: 'Full Name *', type: 'text', placeholder: 'Enter your full name', required: true },
                 { id: 'email', label: 'Email Address *', type: 'email', placeholder: 'Enter your email address', required: true },
@@ -360,12 +356,12 @@ const ContactSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Animated Map Section */}
+        {/* Enhanced Map Section with Real Google Maps */}
         <motion.div 
           className="mt-16"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h3 
@@ -377,22 +373,79 @@ const ContactSection = () => {
           >
             Find Us
           </motion.h3>
+          
+          {/* Location Cards */}
+          <motion.div 
+            className="grid md:grid-cols-2 gap-6 mb-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <motion.div 
+              className="bg-white rounded-xl p-6 shadow-lg"
+              variants={cardVariants}
+              whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
+            >
+              <h4 className="font-serif font-bold text-emerald-800 mb-3 text-xl">Nedumkandam Branch</h4>
+              <p className="text-gray-600 mb-4">Nedumkandam, Idukki District, Kerala, India</p>
+              <motion.a
+                href="https://maps.google.com/?q=Nedumkandam,+Idukki+District,+Kerala,+India"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ExternalLink size={16} />
+                Open in Google Maps
+              </motion.a>
+            </motion.div>
+
+            <motion.div 
+              className="bg-white rounded-xl p-6 shadow-lg"
+              variants={cardVariants}
+              whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
+            >
+              <h4 className="font-serif font-bold text-emerald-800 mb-3 text-xl">Munnar Branch</h4>
+              <p className="text-gray-600 mb-4">Munnar Hills, Idukki District, Kerala, India</p>
+              <motion.a
+                href="https://maps.google.com/?q=Munnar,+Idukki+District,+Kerala,+India"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ExternalLink size={16} />
+                Open in Google Maps
+              </motion.a>
+            </motion.div>
+          </motion.div>
+
+          {/* Embedded Google Map */}
           <motion.div 
             className="bg-white rounded-2xl p-4 shadow-lg"
             whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
             transition={{ duration: 0.3 }}
           >
-            <div className="aspect-video bg-emerald-100 rounded-lg flex items-center justify-center">
-              <div className="text-center text-emerald-700">
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <MapPin size={48} className="mx-auto mb-4" />
-                </motion.div>
-                <p className="text-lg font-semibold">Interactive Map</p>
-                <p className="text-sm">Nedumkandam & Munnar Locations</p>
-              </div>
+            <div className="aspect-video rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125438.28424576254!2d76.99756!3d9.90278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d54715afc31%3A0xeeb5ac62bdc70c75!2sIdukki%2C%20Kerala!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="RJ Ross Hotel Locations - Idukki District, Kerala"
+                className="rounded-lg"
+              ></iframe>
+            </div>
+            <div className="mt-4 text-center">
+              <p className="text-gray-600 text-sm">
+                Interactive map showing Idukki district area where both our hotel branches are located
+              </p>
             </div>
           </motion.div>
         </motion.div>
