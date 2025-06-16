@@ -13,7 +13,7 @@ const AttractionsSection: React.FC = () => {
   // Mapping between nearby destination IDs and attraction detail slugs
   const destinationSlugMap: Record<string, string> = {
     'munnar': 'munnar-hill-station',
-    'thekkady': 'thekkady-wildlife-sanctuary',
+    'thekkady': 'thekkady-wildlife-sanctuary', // Fixed: thekkady maps to thekkady-wildlife-sanctuary
     'vagamon': 'vagamon-meadows',
     'idukki-dam': 'idukki-arch-dam',
     'ramakkalmedu': 'ramakkalmedu',

@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Clock, Star, ArrowLeft, Phone, Camera, Navigation as NavigationIcon, Calendar } from 'lucide-react';
+import { MapPin, Clock, Star, ArrowLeft, Phone, Camera, Navigation as NavigationIcon, Calendar, Home, Map } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
@@ -241,9 +240,16 @@ const AttractionDetail = () => {
         <Navigation />
         <div className="pt-32 pb-20 text-center">
           <h1 className="text-4xl font-bold text-slate-800 mb-4">Attraction Not Found</h1>
-          <Link to="/attractions" className="text-emerald-600 hover:text-emerald-700 font-semibold">
-            ← Back to Attractions
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/" className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold">
+              <Home size={20} />
+              Back to Home
+            </Link>
+            <Link to="/attractions" className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold">
+              <Map size={20} />
+              View All Attractions
+            </Link>
+          </div>
         </div>
         <Footer />
       </div>
@@ -266,13 +272,23 @@ const AttractionDetail = () => {
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Link 
-            to="/attractions"
-            className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-6 transition-colors"
-          >
-            <ArrowLeft size={20} />
-            <span>Back to Attractions</span>
-          </Link>
+          <div className="flex flex-wrap gap-4 mb-6">
+            <Link 
+              to="/"
+              className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full"
+            >
+              <Home size={18} />
+              <span>Back to Home</span>
+            </Link>
+            
+            <Link 
+              to="/attractions"
+              className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full"
+            >
+              <ArrowLeft size={18} />
+              <span>All Attractions</span>
+            </Link>
+          </div>
           
           <div className="text-white">
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6">

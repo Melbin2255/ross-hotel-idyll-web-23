@@ -1,6 +1,7 @@
+
 import React, { useEffect, useRef } from 'react';
-import { MapPin, Clock, Star, Camera, ArrowRight, Phone } from 'lucide-react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { MapPin, Clock, Star, Camera, ArrowRight, Phone, Home } from 'lucide-react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
@@ -95,6 +96,17 @@ const Attractions = () => {
       <Navigation />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Navigation */}
+        <div className="mb-8">
+          <Link 
+            to="/"
+            className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold transition-colors"
+          >
+            <Home size={20} />
+            <span>Back to Home</span>
+          </Link>
+        </div>
+
         {/* Page Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-emerald-800 mb-6">
