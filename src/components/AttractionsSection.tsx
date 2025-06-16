@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from "react";
 import { nearby, type Destination } from "../data/nearby";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,16 @@ const AttractionsSection: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [animateIn, setAnimateIn] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+
+  // Mapping between nearby destination IDs and attraction detail slugs
+  const destinationSlugMap: Record<string, string> = {
+    'munnar': 'munnar-hill-station',
+    'thekkady': 'thekkady-wildlife-sanctuary',
+    'vagamon': 'vagamon-meadows',
+    'idukki-dam': 'idukki-arch-dam',
+    'ramakkalmedu': 'ramakkalmedu',
+    'nedumkandam': 'nedumkandam'
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -94,9 +105,10 @@ const AttractionsSection: React.FC = () => {
     };
   };
 
-  const handleNodeClick = (nodeId: string, name: string) => {
-    const slug = name.toLowerCase().replace(/\s+/g, '-');
-    if (nodeId !== "nedumkandam") {
+  const handleNodeClick = (nodeId: string) => {
+    // Use the mapping to get the correct slug for navigation
+    const slug = destinationSlugMap[nodeId];
+    if (slug) {
       navigate(`/attractions/${slug}`);
     }
   };
@@ -260,7 +272,7 @@ const AttractionsSection: React.FC = () => {
                 className="flex flex-col items-center group cursor-pointer"
                 onMouseEnter={() => setActiveNode("nedumkandam")}
                 onMouseLeave={() => setActiveNode(null)}
-                onClick={() => handleNodeClick("nedumkandam", nedumNode.name)}
+                onClick={() => handleNodeClick("nedumkandam")}
               >
                 <div className="relative w-20 h-20 md:w-44 md:h-44 rounded-full shadow-2xl bg-gradient-to-br from-white via-emerald-50 to-white border-2 md:border-3 border-emerald-200 flex items-center justify-center transition-all duration-700 overflow-hidden group-hover:shadow-3xl group-hover:scale-110 group-hover:border-emerald-300">
                   <div className="absolute inset-0 rounded-full bg-emerald-400/20 animate-ping"></div>
@@ -301,7 +313,7 @@ const AttractionsSection: React.FC = () => {
                 animateIn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-50 translate-y-12'
               }`}
               style={getNodePosition(activity.coords, false)}
-              onClick={() => handleNodeClick(activity.id, activity.name)}
+              onClick={() => handleNodeClick(activity.id)}
               onMouseEnter={() => setActiveNode(activity.id)}
               onMouseLeave={() => setActiveNode(null)}
             >
